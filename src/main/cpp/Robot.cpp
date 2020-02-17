@@ -18,7 +18,10 @@ void Robot::RobotInit() {
 
   joystick_1 = new frc::Joystick(0);
 
-  ball_shooter = new rev::CANSparkMax(1, rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+  ball_shooter = new rev::CANSparkMax(7, rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+  ball_shooter_adjuster = new rev::CANSparkMax(8, rev::CANSparkMaxLowLevel::MotorType::kBrushless);
+
+  geneva_drive = new rev::CANSparkMax(6, rev::CANSparkMaxLowLevel::MotorType::kBrushless);
 }
 
 /**
@@ -66,7 +69,21 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {}
 
 void Robot::TeleopPeriodic() { 
-  ball_shooter->Set(-joystick_1->GetRawAxis(1));
+  ball_shooter->Set(joystick_1->GetRawAxis(y_axis));
+  geneva_drive->Set(joystick_1->GetRawAxis(w_axis));
+
+  if(joystick_1->GetRawButton(left_bumper))
+  {
+    ball_shooter_adjuster->Set(0.25);
+  } 
+  else if(joystick_1->GetRawButton(left_trigger))
+  {
+    ball_shooter_adjuster->Set(-0.25);
+  }
+  else
+  {
+    ball_shooter_adjuster->Set(0);
+  }
 }
 
 void Robot::TestPeriodic() {}

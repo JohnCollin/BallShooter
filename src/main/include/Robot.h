@@ -16,6 +16,8 @@
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
 
+#include "RobotUtilities.h"
+
 class Robot : public frc::TimedRobot {
  public:
   void RobotInit() override;
@@ -34,5 +36,8 @@ class Robot : public frc::TimedRobot {
 
   frc::Joystick* joystick_1;
 
-  rev::CANSparkMax* ball_shooter;  
+  rev::CANSparkMax* ball_shooter;
+  rev::CANSparkMax* ball_shooter_adjuster;
+
+  rev::CANSparkMax* geneva_drive;  
 };
